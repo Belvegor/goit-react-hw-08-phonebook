@@ -1,40 +1,49 @@
+import { SharedLayout } from './SharedLayout/SharedLayout';
+import Home from 'pages/Home';
+import { Route, Routes } from 'react-router-dom';
+import { NotFoundPage } from 'pages/NotFoundPage';
+import Contacts from 'pages/Contacts';
+import Register from 'pages/Register';
+import Login from 'pages/Login';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts, addContact, deleteContact } from '../redux/operations';
-import { setFilterValue } from '../redux/filterSlice';
-
-import ContactForm from './ContactForm';
-import Filter from './Filter';
-import ContactList from './ContactList';
+import { currentUser } from '../redux/auth/operations';
+import { useAuth } from 'hooks/useAuth';
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts);
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(currentUser());
   }, [dispatch]);
 
-  const handleFilterChange = (filter) => {
-    dispatch(setFilterValue(filter));
-  };
-
-  const handleAddContact = (contact) => {
-    dispatch(addContact(contact));
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
-
+  if (isRefreshing) {
+    return <p>loading...</p>;
+  }
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm onAddContact={handleAddContact} />
-      <h2>Contacts</h2>
-      <Filter onFilterChange={handleFilterChange} />
-      <ContactList contacts={contacts} onDeleteContact={handleDeleteContact} />
-    </div>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route
+          path="contacts"
+          element={
+            <ProtectedRoute Component={<Contacts />} redirectTo="/login" />
+          }
+        />
+        <Route
+          path="register"
+          element={<PrivateRoute Component={<Register />} redirectTo="/" />}
+        />
+        <Route
+          path="login"
+          element={<PrivateRoute Component={<Login />} redirectTo="/" />}
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 };
 
