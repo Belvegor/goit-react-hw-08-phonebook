@@ -5,7 +5,7 @@ export const NotFoundPage = () => {
   return (
     <>
       <Helmet>
-        <title>hw8 - not found page</title>
+        <title>Page not found</title>
       </Helmet>
       <div>
         <h2>
