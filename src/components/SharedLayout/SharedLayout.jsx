@@ -35,56 +35,49 @@ export const SharedLayout = () => {
     handleClose();
     navigate('/login');
   };
+  const handleContactsClick = () => {
+    handleClose();
+    navigate('/contacts');
+  };
 
   return (
     <>
-      
+    <header >
       <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        MENU
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem  onClick={handleHomeClick} >Home</MenuItem>
-        {isLoggedIn && (
-            <MenuItem onClick={handleClose}>
-              <Link to="/contacts">Contacts</Link>
-            </MenuItem>
+        <Button
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          MENU
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleHomeClick}>Home</MenuItem>
+          {!isLoggedIn && (
+            <>
+              <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
+              <MenuItem onClick={handleLoginClick}>Login</MenuItem>
+            </>
           )}
-        <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
-        <MenuItem onClick={handleLoginClick}>Login</MenuItem>
-      </Menu>
-    </div>
+          {isLoggedIn && (
+            <MenuItem onClick={handleContactsClick}>Contacts</MenuItem>
+          )}
+          {isLoggedIn && <UserMenu />}
+        </Menu>
+      </div>
       
+   </header>
       <div>
-        <header >
-          <nav >
-            <div>
-              <Link to="/"> Home </Link>{isLoggedIn && (<Link to="/contacts">Contacts</Link>)}
-            </div>
-            <div>
-              {!isLoggedIn ? (
-              <>
-              <Link to="/register">Register</Link>
-              <Link to="/login">Login</Link>
-              </>
-              ) : (<UserMenu/>)}
-            </div>
-          </nav>
-        </header>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />
         </Suspense>

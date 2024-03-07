@@ -1,6 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
 import { nanoid } from '@reduxjs/toolkit';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -24,27 +28,23 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        
-        type="text"
-        name="name"
-        placeholder="Name: full name"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-      />
-      <input
-        
-        type="number"
-        name="number"
-        placeholder="Phone number: seven digits"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-      />
-      <button type="submit">
-        Add contact
-      </button>
-    </form>
+    <>
+     <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField id="outlined-basic" label="Name:" required variant="outlined" type="text" name="name"  title="Your name"/>
+        <TextField id="outlined-basic" label="Phone Number:" variant="outlined" required type="number" name="number" title="Phone number must contain digits."/>
+        <Stack spacing={2} direction="row">
+          <Button variant="contained"  type="submit">Add Contact</Button>
+        </Stack>
+      </Box>  
+  </>
   );
 };
 
