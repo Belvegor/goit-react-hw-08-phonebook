@@ -2,9 +2,6 @@ import { useDispatch } from 'react-redux';
 import { setFilter } from '../../redux/filter/filterSlice';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -17,7 +14,6 @@ const Filter = () => {
 
   return (
     <>
-
     <Box
         component="form"
         sx={{
