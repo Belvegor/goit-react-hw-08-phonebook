@@ -21,7 +21,7 @@ const Contacts = () => {
   return (
     <>
       <Helmet>
-        <title>hw8 - Contacts list</title>
+        <title>Contacts list</title>
       </Helmet>
       <div>
         <div>
