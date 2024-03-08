@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/auth/operations';
 import { useAuth } from 'hooks/useAuth';
+import Button from '@mui/material/Button';
 
 
 const UserMenu = () => {
@@ -14,9 +15,12 @@ const UserMenu = () => {
   return (
     <div>
       <p>{user.name}</p>
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+      <Button
+          id="basic-button"         
+          onClick={handleLogout}
+        >
+          LOGOUT
+        </Button>
     </div>
   );
 };
